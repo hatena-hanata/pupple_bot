@@ -61,7 +61,7 @@ def handle_message(event):
     else:
         my_actions = []
         for song_name in result:
-            my_actions.append( PostbackAction(label=song_name, data=result[song_name]) )
+            my_actions.append( PostbackAction(label=song_name, data=result[song_name], text='キーを判別します！しばらくお待ち下さい。') )
 
         buttons_template = ButtonsTemplate(
             title='{}の検索結果です！'.format(input_text), text='キーを知りたい曲を選んでください！', actions=my_actions
@@ -72,13 +72,13 @@ def handle_message(event):
 
 @handler.add(PostbackEvent)
 def handle_postback(event):
-
-    success_message = 'キーを判別します！しばらくお待ち下さい。'
-
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=success_message)
-    )
+    #
+    # success_message = 'キーを判別します！しばらくお待ち下さい。'
+    #
+    # line_bot_api.reply_message(
+    #     event.reply_token,
+    #     TextSendMessage(text=success_message)
+    # )
 
     result = scraping(event.postback.data)
     print(result)
