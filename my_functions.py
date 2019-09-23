@@ -51,7 +51,14 @@ def other_scraping(input_text):
     url = 'https://www.ufret.jp/search.php?key=' + input_text
     r = requests.get(url)
     soup = BeautifulSoup(r.content, 'html.parser')
-    tags = soup.find_all('a', class_='list-group-item list-group-item-action')[:3]
+
+    # 検索結果あるかチェック
+    if 'お探しのキーワードに一致する結果はありませんでした。' in soup.find_all('div', class_='card card-body bg-light p-2')[1].text:
+        return 'error'
+
+    tags = soup.find_all('a', class_='list-group-item list-group-item-action')
+    if len(tags) > 4:
+        tags = tags[:4]
     result = {}
     for tag in tags:
         song_name = tag.find('strong').text

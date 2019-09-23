@@ -52,21 +52,28 @@ def handle_message(event):
     #     TextSendMessage(text=result))
 
     result = other_scraping(input_text)
-    my_actions = []
-    for song_name in result:
-        my_actions.append( PostbackAction(label=song_name, data=result[song_name]) )
 
-    buttons_template = ButtonsTemplate(
-        title='{}の検索結果です！'.format(input_text), text='キーを知りたい曲を選んでください！', actions=my_actions
-    )
-    template_message = TemplateSendMessage(alt_text='{}の検索結果です！\nキーを知りたい曲を選んでください！'.format(input_text), template=buttons_template)
-    line_bot_api.reply_message(event.reply_token, template_message)
+    if result == 'error':
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text='お探しのキーワードに一致する結果はありませんでした')
+        )
+    else:
+        my_actions = []
+        for song_name in result:
+            my_actions.append( PostbackAction(label=song_name, data=result[song_name]) )
+
+        buttons_template = ButtonsTemplate(
+            title='{}の検索結果です！'.format(input_text), text='キーを知りたい曲を選んでください！', actions=my_actions
+        )
+        template_message = TemplateSendMessage(alt_text='{}の検索結果です！\nキーを知りたい曲を選んでください！'.format(input_text), template=buttons_template)
+        line_bot_api.reply_message(event.reply_token, template_message)
 
 
 @handler.add(PostbackEvent)
 def handle_postback(event):
 
-    success_message = '{}\nのキーを調べます！'.format(event.postback.label)
+    success_message = 'キーを判別します！しばらくお待ち下さい。'
 
     line_bot_api.reply_message(
         event.reply_token,
