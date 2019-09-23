@@ -55,7 +55,7 @@ def other_scraping(input_text):
     result = {}
     for tag in tags:
         song_name = tag.find('strong').text
-        artist_name = tag.find('span').text
+        artist_name = tag.find('span', style='font-size:12px;').text
         if len(song_name) > 8:
             song_name = song_name[:8]
         if len(artist_name) > 8:

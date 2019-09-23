@@ -63,24 +63,15 @@ def handle_message(event):
     line_bot_api.reply_message(event.reply_token, template_message)
 
 
-    # buttons_template = ButtonsTemplate(
-    #     title='{}の検索結果です'.format(input_text), text='キーを知りたい曲を選んでください！', actions=[
-    #         PostbackAction(label=tmp[0][0], data=tmp[0][1]),
-    #         PostbackAction(label=tmp[1][0], data=tmp[1][1]),
-    #         PostbackAction(label=tmp[2][0], data=tmp[2][1]),
-    #     ])
-
-    # buttons_template = ButtonsTemplate(
-    #     title='{}の検索結果です'.format(input_text), text='まず、あなたの性別を教えてください!', actions=[
-    #         PostbackAction(label='男', data='male'),
-    #         PostbackAction(label='女', data='female'),
-    #     ])
-    # template_message = TemplateSendMessage(alt_text='{}の検索結果です\nキーを知りたい曲を選んでください！'.format(input_text), template=buttons_template)
-    # line_bot_api.reply_message(event.reply_token, template_message)
-
-
 @handler.add(PostbackEvent)
 def handle_postback(event):
+
+    success_message = '{}\nのキーを調べます！'.format(event.postback.label)
+
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=success_message)
+    )
 
     result = scraping(event.postback.data)
 
