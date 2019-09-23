@@ -53,10 +53,8 @@ def handle_message(event):
 
     result = other_scraping(input_text)
     my_actions = []
-    tmp = []
     for song_name in result:
         my_actions.append( PostbackAction(label=song_name, data=result[song_name]) )
-        tmp.append([song_name, result[song_name]])
 
     buttons_template = ButtonsTemplate(
         title='{}の検索結果です！'.format(input_text), text='キーを知りたい曲を選んでください！', actions=my_actions

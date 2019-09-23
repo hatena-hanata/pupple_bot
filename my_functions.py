@@ -54,7 +54,13 @@ def other_scraping(input_text):
     tags = soup.find_all('a', class_='list-group-item list-group-item-action')[:3]
     result = {}
     for tag in tags:
-        song_artist_name = tag.text
-        result[song_artist_name] = 'https://www.ufret.jp' + tag.get('href')
+        song_name = tag.find('strong').text
+        artist_name = tag.find('span').text
+        if len(song_name) > 8:
+            song_name = song_name[:8]
+        if len(artist_name) > 8:
+            artist_name = artist_name[:8]
+        key_name = '{} - {}'.format(song_name, artist_name)
+        result[key_name] = 'https://www.ufret.jp' + tag.get('href')
 
     return result
