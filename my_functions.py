@@ -46,3 +46,15 @@ def scraping(input_text):
 
     return result
 
+
+def other_scraping(input_text):
+    url = 'https://www.ufret.jp/search.php?key=' + input_text
+    r = requests.get(url)
+    soup = BeautifulSoup(r.content, 'html.parser')
+    tags = soup.find_all('a', class_='list-group-item list-group-item-action')[:3]
+    result = {}
+    for tag in tags:
+        song_artist_name = tag.text
+        result[song_artist_name] = 'https://www.ufret.jp' + tag.get('href')
+
+    return result

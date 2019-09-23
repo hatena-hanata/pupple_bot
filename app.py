@@ -7,11 +7,11 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
+    MessageEvent, TextMessage, TextSendMessage, ButtonsTemplate, PostbackAction, TemplateSendMessage, PostbackEvent
 )
 import os
 
-from my_functions import scraping
+from my_functions import scraping, other_scraping
 
 app = Flask(__name__)
 
@@ -45,13 +45,35 @@ def callback():
 def handle_message(event):
     input_text = event.message.text
 
-    result = scraping(input_text)
+    # result = scraping(input_text)
+    #
+    # line_bot_api.reply_message(
+    #     event.reply_token,
+    #     TextSendMessage(text=result))
 
-    # result = input_text * 2
+    result = other_scraping(input_text)
+    actions = []
+    for song_name in result:
+        actions.append(
+            PostbackAction(label=song_name, data=result[song_name])
+        )
+
+    buttons_template = ButtonsTemplate(
+        title='{} の検索結果です！'.format(input_text), text='キーを知りたい曲を選んでください！', actions=actions
+    )
+    template_message = TemplateSendMessage(alt_text='{} の検索結果です！\nキーを知りたい曲を選んでください！'.format(input_text), template=buttons_template)
+    line_bot_api.reply_message(event.reply_token, template_message)
+
+
+@handler.add(PostbackEvent)
+def handle_postback(event):
+
+    result = scraping(event.postback.data)
 
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=result))
+        TextSendMessage(text=result)
+    )
 
 
 if __name__ == "__main__":
