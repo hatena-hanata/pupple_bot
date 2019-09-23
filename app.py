@@ -11,6 +11,8 @@ from linebot.models import (
 )
 import os
 
+from .my_functions import scraping
+
 app = Flask(__name__)
 
 #LINE Access Token
@@ -41,10 +43,13 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    word = event.message.text * 2
+    input_text = event.message.text
+
+    result = scraping(input_text)
+
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=word))
+        TextSendMessage(text=result))
 
 
 if __name__ == "__main__":
