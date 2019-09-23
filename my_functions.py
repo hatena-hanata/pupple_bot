@@ -5,8 +5,12 @@ from music_class import *
 import pickle
 
 def scraping(input_text):
-    r = requests.get(input_text)
-    soup = BeautifulSoup(r.content, 'html.parser')
+    try:
+        r = requests.get(input_text)
+        soup = BeautifulSoup(r.content, 'html.parser')
+    except:
+        return 'タイムアウトエラー'
+    
     # 曲名取得
     song_name = soup.find('title').text.split('ギ')[0]
     song_name = song_name[:len(song_name) - 1]

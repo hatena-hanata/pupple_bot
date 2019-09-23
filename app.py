@@ -81,6 +81,7 @@ def handle_postback(event):
     )
 
     result = scraping(event.postback.data)
+    print(result)
 
     line_bot_api.reply_message(
         event.reply_token,
