@@ -61,7 +61,7 @@ def handle_message(event):
     else:
         my_actions = []
         for song_name in result:
-            my_actions.append( PostbackAction(label=song_name, data=result[song_name], text='キーを判別します！しばらくお待ち下さい。') )
+            my_actions.append( PostbackAction(label=song_name, data=result[song_name], display_text=song_name) )
 
         buttons_template = ButtonsTemplate(
             title='{}の検索結果です！'.format(input_text), text='キーを知りたい曲を選んでください！', actions=my_actions
@@ -81,7 +81,6 @@ def handle_postback(event):
     # )
 
     result = scraping(event.postback.data)
-    print(result)
 
     line_bot_api.reply_message(
         event.reply_token,
