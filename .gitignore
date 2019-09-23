@@ -1,0 +1,12 @@
+*.png
+.idea
+*.pdf
+__init__.py
+*.pyc
+__pycache__
+local_settings.py
+db.sqlite3
+venv
+templates
+static
+
