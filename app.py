@@ -52,22 +52,20 @@ def handle_message(event):
     #     TextSendMessage(text=result))
 
     result = other_scraping(input_text)
-    for k in result:
-        ans = k
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=ans))
-    # actions = []
-    # for song_name in result:
-    #     actions.append(
-    #         PostbackAction(label=song_name, data=result[song_name])
-    #     )
-    #
-    # buttons_template = ButtonsTemplate(
-    #     title='{} の検索結果です！'.format(input_text), text='キーを知りたい曲を選んでください！', actions=actions
-    # )
-    # template_message = TemplateSendMessage(alt_text='{} の検索結果です！\nキーを知りたい曲を選んでください！'.format(input_text), template=buttons_template)
-    # line_bot_api.reply_message(event.reply_token, template_message)
+    actions = []
+    for song_name in result:
+        actions.append(
+            PostbackAction(label=song_name, data=result[song_name])
+        )
+        a = song_name
+
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
+    buttons_template = ButtonsTemplate(
+        title='{} の検索結果です！'.format(input_text), text='キーを知りたい曲を選んでください！', actions=actions
+    )
+    template_message = TemplateSendMessage(alt_text='{} の検索結果です！\nキーを知りたい曲を選んでください！'.format(input_text), template=buttons_template)
+    line_bot_api.reply_message(event.reply_token, template_message)
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
     #
     # buttons_template = ButtonsTemplate(
     #     title='友達追加ありがとう！', text='まず、あなたの性別を教えてください!', actions=[
