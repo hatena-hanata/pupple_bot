@@ -65,11 +65,11 @@ def handle_message(event):
     # line_bot_api.reply_message(event.reply_token, template_message)
     #
     buttons_template = ButtonsTemplate(
-        title='友達追加ありがとう！', text='まず、あなたの性別を教えてください!', actions=[
+        title='{}の検索結果です'.format(input_text), text='まず、あなたの性別を教えてください!', actions=[
             PostbackAction(label='男', data='male'),
             PostbackAction(label='女', data='female'),
         ])
-    template_message = TemplateSendMessage(alt_text='友達追加ありがとう！\nまず、あなたの性別を教えてください。', template=buttons_template)
+    template_message = TemplateSendMessage(alt_text='{}の検索結果です\nまず、あなたの性別を教えてください。'.format(input_text), template=buttons_template)
     line_bot_api.reply_message(event.reply_token, template_message)
 
 
