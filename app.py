@@ -11,7 +11,7 @@ from linebot.models import (
 )
 import os
 
-from .my_functions import scraping
+from my_functions import scraping
 
 app = Flask(__name__)
 
@@ -45,9 +45,9 @@ def callback():
 def handle_message(event):
     input_text = event.message.text
 
-    # result = scraping(input_text)
+    result = scraping(input_text)
 
-    result = input_text * 2
+    # result = input_text * 2
 
     line_bot_api.reply_message(
         event.reply_token,
