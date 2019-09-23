@@ -67,8 +67,9 @@ def handle_message(event):
 
     buttons_template = ButtonsTemplate(
         title='{}の検索結果です'.format(input_text), text='キーを知りたい曲を選んでください！', actions=[
-            PostbackAction(label=tmp[0][0], data='male'),
-            PostbackAction(label=tmp[1][0], data='female'),
+            PostbackAction(label=tmp[0][0], data=tmp[0][1]),
+            PostbackAction(label=tmp[1][0], data=tmp[1][1]),
+            PostbackAction(label=tmp[2][0], data=tmp[2][1]),
         ])
 
     # buttons_template = ButtonsTemplate(
