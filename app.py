@@ -64,12 +64,19 @@ def handle_message(event):
     # template_message = TemplateSendMessage(alt_text='の検索結果です！\nキーを知りたい曲を選んでください！', template=buttons_template)
     # line_bot_api.reply_message(event.reply_token, template_message)
     #
+
     buttons_template = ButtonsTemplate(
-        title='{}の検索結果です'.format(input_text), text='まず、あなたの性別を教えてください!', actions=[
-            PostbackAction(label='男', data='male'),
-            PostbackAction(label='女', data='female'),
+        title='{}の検索結果です'.format(input_text), text='キーを知りたい曲を選んでください！', actions=[
+            PostbackAction(label=tmp[0][0], data='male'),
+            PostbackAction(label=tmp[1][0], data='female'),
         ])
-    template_message = TemplateSendMessage(alt_text='{}の検索結果です\nまず、あなたの性別を教えてください。'.format(input_text), template=buttons_template)
+
+    # buttons_template = ButtonsTemplate(
+    #     title='{}の検索結果です'.format(input_text), text='まず、あなたの性別を教えてください!', actions=[
+    #         PostbackAction(label='男', data='male'),
+    #         PostbackAction(label='女', data='female'),
+    #     ])
+    template_message = TemplateSendMessage(alt_text='{}の検索結果です\nキーを知りたい曲を選んでください！'.format(input_text), template=buttons_template)
     line_bot_api.reply_message(event.reply_token, template_message)
 
 
